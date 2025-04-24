@@ -58,13 +58,6 @@ jobs:
           chmod 600 private_key.pem
           echo "PRIVATE_KEY_PATH=$PWD/private_key.pem" >> $GITHUB_ENV
           
-          # Obter credenciais Dynatrace
-          DT_ENDPOINT=$(curl -s -k -H "X-Vault-Token: ${VAULT_TOKEN}" ${VAULT_ADDR}/v1/kv/data/dynatrace | jq -r '.data.data.env')
-          DT_API_TOKEN=$(curl -s -k -H "X-Vault-Token: ${VAULT_TOKEN}" ${VAULT_ADDR}/v1/kv/data/dynatrace | jq -r '.data.data.otel_token')
-          
-          # Criar arquivo de variáveis do Dynatrace
-          echo "DT_ENDPOINT=$DT_ENDPOINT" > dynatrace.env
-          echo "DT_API_TOKEN=$DT_API_TOKEN" >> dynatrace.env
 
       - name: Setup and Test SSH Connection
         run: |
@@ -98,9 +91,6 @@ jobs:
           echo "🔧 Preparando ambiente na EC2..."
           ssh ec2 'sudo mkdir -p /repo && sudo chown ubuntu:ubuntu /repo'
           ssh ec2 'cd /repo && git clone https://github.com/gaamaro/opentelemetry-demo.git || (cd opentelemetry-demo && git pull)'
-          
-          echo "📝 Copiando arquivo de configuração do Dynatrace..."
-          scp dynatrace.env ec2:/repo/opentelemetry-demo/
 
       - name: Deploy to EC2
         run: |
