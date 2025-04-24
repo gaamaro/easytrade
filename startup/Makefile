@@ -4,7 +4,7 @@ deploy:
 	@echo "🚀 Iniciando deploy na EC2 remota..."
 	@for i in $$(seq 1 3); do \
 		echo "Tentativa $$i de 3..."; \
-		if ssh -o BatchMode=yes ec2 'cd /repo/opentelemetry-demo && \
+		if ssh -o BatchMode=yes ec2 'cd /repo/easytrade && \
 			export $$(cat dynatrace.env | xargs) && \
 			docker compose pull && \
 			docker compose up --force-recreate --remove-orphans --detach'; then \

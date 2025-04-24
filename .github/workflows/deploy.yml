@@ -90,7 +90,7 @@ jobs:
         run: |
           echo "🔧 Preparando ambiente na EC2..."
           ssh ec2 'sudo mkdir -p /repo && sudo chown ubuntu:ubuntu /repo'
-          ssh ec2 'cd /repo && git clone https://github.com/gaamaro/opentelemetry-demo.git || (cd opentelemetry-demo && git pull)'
+          ssh ec2 'cd /repo && git clone https://github.com/gaamaro/easytrade.git || (cd easytrade && git pull)'
 
       - name: Deploy to EC2
         run: |
